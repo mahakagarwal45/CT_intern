@@ -1,0 +1,107 @@
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  background: #f4f7fa;
+}
+
+.box-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+  background: #e5ecf1;
+}
+
+.box-card {
+  background: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  border: 1px solid #cfd8dc; /* Outline */
+  max-width: 550px;
+  width: 100%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+}
+
+.box-card h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #2e3b4e;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #34495e;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font-size: 1rem;
+  border: 1px solid #b0bec5;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.2s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: #3498db;
+}
+
+.input-group input.error,
+.input-group select.error {
+  border-color: #e74c3c;
+}
+
+.input-group small {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+  display: block;
+}
+
+.password-row,
+.phone-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.phone-row select {
+  width: 30%;
+}
+
+.phone-row input {
+  width: 70%;
+}
+
+.show-label {
+  font-size: 0.85rem;
+  margin-left: 0.5rem;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 0.9rem;
+  background: #2e86de;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+  background: #1e5fa3;
+}

@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+
+### 📝 Registration Form
+
+![Form Preview](public/form-preview1.jpg)(public/form-preview2.jpg)
+
+### ✅ Success Page
+
+<!-- ![Success Page](public/success-page.png) -->
 ## Available Scripts
 
 In the project directory, you can run:

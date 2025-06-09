@@ -5,9 +5,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### 📝 Registration Form
 
-![Form Preview](public/form-preview1.jpg)(public/form-preview2.jpg)
-
-### ✅ Success Page
+![Form Preview](public/form-preview1.jpg)
+![Form Preview](public/form-preview2.jpg)
+<!-- ### ✅ Success Page -->
 
 <!-- ![Success Page](public/success-page.png) -->
 ## Available Scripts

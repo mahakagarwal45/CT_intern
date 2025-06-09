@@ -1,7 +1,7 @@
 body {
   font-family: "Segoe UI", sans-serif;
   margin: 0;
-  background: #f4f7fa;
+  background: #f0f2f5;
 }
 
 .box-container {
@@ -9,70 +9,70 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 1rem;
-  background: #e5ecf1;
+  background: #e3f2fd;
+  padding: 2rem;
 }
 
 .box-card {
-  background: #ffffff;
-  padding: 2rem 2.5rem;
+  background-color: white;
+  padding: 2.5rem;
   border-radius: 12px;
-  border: 1px solid #cfd8dc; /* Outline */
-  max-width: 550px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
   width: 100%;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+  max-width: 550px;
+  border: 1px solid #cfd8dc;
 }
 
 .box-card h2 {
   text-align: center;
-  margin-bottom: 2rem;
-  color: #2e3b4e;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
 }
 
 .input-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.4rem;
 }
 
 .input-group label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: 600;
+  font-weight: bold;
   color: #34495e;
 }
 
 .input-group input,
 .input-group select {
   width: 100%;
-  padding: 0.7rem 0.9rem;
-  font-size: 1rem;
-  border: 1px solid #b0bec5;
+  padding: 0.75rem;
   border-radius: 8px;
-  outline: none;
-  transition: border 0.2s ease;
+  border: 1px solid #bdc3c7;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
 }
 
 .input-group input:focus,
 .input-group select:focus {
   border-color: #3498db;
+  outline: none;
+}
+
+.input-group small {
+  color: red;
+  margin-top: 0.3rem;
+  display: block;
+  font-size: 0.85rem;
 }
 
 .input-group input.error,
 .input-group select.error {
-  border-color: #e74c3c;
-}
-
-.input-group small {
-  color: #e74c3c;
-  font-size: 0.85rem;
-  margin-top: 0.2rem;
-  display: block;
+  border-color: red;
 }
 
 .password-row,
 .phone-row {
   display: flex;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
 }
 
 .phone-row select {
@@ -85,23 +85,21 @@ body {
 
 .show-label {
   font-size: 0.85rem;
-  margin-left: 0.5rem;
 }
 
 .submit-btn {
-  width: 100%;
-  padding: 0.9rem;
-  background: #2e86de;
+  background-color: #007bff;
   color: white;
+  padding: 0.9rem;
   font-size: 1rem;
-  font-weight: bold;
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  margin-top: 0.5rem;
-  transition: background 0.3s ease;
+  width: 100%;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover {
-  background: #1e5fa3;
+  background-color: #0056b3;
 }

@@ -1,146 +1,196 @@
-import react, {useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {countriesData} from "./data";
-import "./Form.css";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./styles.css";
-function FormPage() {
-  const [form, setForm] = useState({
+
+const FormBox = () => {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     username: "",
     email: "",
     password: "",
-    showPassword: false,
-    phoneCode: "",
+    phoneCode: "+91",
     phoneNumber: "",
     country: "",
     city: "",
     pan: "",
     aadhar: "",
   });
+
   const [errors, setErrors] = useState({});
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const countries = {
+    India: ["Delhi", "Mumbai", "Jaipur"],
+    USA: ["New York", "San Francisco", "Chicago"],
+    UK: ["London", "Manchester", "Birmingham"],
+  };
 
   const validate = () => {
     const newErrors = {};
-    if (!form.firstName.trim()) newErrors.firstName = "First Name is required";
-    if (!form.lastName.trim()) newErrors.lastName = "Last Name is required";
-    if (!form.username.trim()) newErrors.username = "Username is required";
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) newErrors.email = "Invalid Email";
-    if (!form.password) newErrors.password = "Password is required";
-    if (!form.phoneCode || !form.phoneNumber) newErrors.phone = "Complete Phone No. is required";
-    if (!form.country) newErrors.country = "Country is required";
-    if (!form.city) newErrors.city = "City is required";
-    if (!form.pan || form.pan.length !== 10) newErrors.pan = "PAN must be 10 characters";
-    if (!form.aadhar || form.aadhar.length !== 12) newErrors.aadhar = "Aadhar must be 12 digits";
+    const emailRegex = /^\S+@\S+\.\S+$/;
+    const phoneRegex = /^[0-9]{10}$/;
+    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+    const aadharRegex = /^[0-9]{12}$/;
+
+    if (!formData.firstName.trim()) newErrors.firstName = "First name is required.";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required.";
+    if (!formData.username.trim()) newErrors.username = "Username is required.";
+    if (!formData.email.trim() || !emailRegex.test(formData.email)) newErrors.email = "Valid email is required.";
+    if (!formData.password) newErrors.password = "Password is required.";
+    if (!phoneRegex.test(formData.phoneNumber)) newErrors.phoneNumber = "Phone number must be 10 digits.";
+    if (!formData.country) newErrors.country = "Country is required.";
+    if (!formData.city) newErrors.city = "City is required.";
+    if (!panRegex.test(formData.pan)) newErrors.pan = "Invalid PAN number.";
+    if (!aadharRegex.test(formData.aadhar)) newErrors.aadhar = "Aadhar must be 12 digits.";
 
     setErrors(newErrors);
+    console.log("Validation Errors:", newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: type === "checkbox" ? checked : value,
-    }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setErrors({ ...errors, [e.target.name]: "" });
   };
 
+  
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validate()) {
-      navigate("/success", { state: form });
-    }
-  };
+  e.preventDefault();
+  if (validate()) {
+    alert("Form submitted successfully!");
+    // Ensure navigation happens AFTER alert is closed
+    setTimeout(() => {
+      navigate("/success", { state: { formData } });
+    }, 0);
+  }
+};
 
-  const cities = countriesData[form.country]?.cities || [];
 
   return (
-    <div style={{ maxWidth: "600px", margin: "auto" }}>
-      <h2>Registration Form</h2>
-      <form onSubmit={handleSubmit}>
-        {["firstName", "lastName", "username", "email", "pan", "aadhar"].map((field) => (
-          <div key={field}>
-            <label>{field.charAt(0).toUpperCase() + field.slice(1)}:</label>
+    <div className="box-container">
+      <form className="box-card" onSubmit={handleSubmit}>
+        <h2>Registration Form</h2>
+
+        {["FirstName", "LastName", "Username", "E-mail"].map((field) => (
+          <div className="input-group" key={field}>
+            <label>{field.replace(/([A-Z])/g, " $1")}</label>
             <input
               type="text"
               name={field}
-              value={form[field]}
+              value={formData[field]}
               onChange={handleChange}
+              className={errors[field] ? "error" : ""}
             />
-            {errors[field] && <p style={{ color: "red" }}>{errors[field]}</p>}
+            {errors[field] && <small>{errors[field]}</small>}
           </div>
         ))}
 
-        <div>
-          <label>Password:</label>
-          <input
-            type={form.showPassword ? "text" : "password"}
-            name="password"
-            value={form.password}
-            onChange={handleChange}
-          />
-          <input
-            type="checkbox"
-            name="showPassword"
-            checked={form.showPassword}
-            onChange={handleChange}
-          />
-          Show Password
-          {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
+        <div className="input-group">
+          <label>Password</label>
+          <div className="password-row">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className={errors.password ? "error" : ""}
+            />
+            <label className="show-label">
+              <input
+                type="checkbox"
+                onChange={() => setShowPassword(!showPassword)}
+              />
+              Show
+            </label>
+          </div>
+          {errors.password && <small>{errors.password}</small>}
         </div>
 
-        <div>
-          <label>Phone No.:</label>
-          <select name="phoneCode" value={form.phoneCode} onChange={handleChange}>
-            <option value="">Code</option>
-            <option value="+91">+91</option>
-            <option value="+1">+1</option>
-            <option value="+44">+44</option>
+        <div className="input-group">
+          <label>Phone Number</label>
+          <div className="phone-row">
+            <select name="phoneCode" value={formData.phoneCode} onChange={handleChange}>
+              <option value="+91">+91</option>
+              <option value="+1">+1</option>
+              <option value="+44">+44</option>
+            </select>
+            <input
+              type="text"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+              className={errors.phoneNumber ? "error" : ""}
+            />
+          </div>
+          {errors.phoneNumber && <small>{errors.phoneNumber}</small>}
+        </div>
+
+        <div className="input-group">
+          <label>Country</label>
+          <select
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+            className={errors.country ? "error" : ""}
+          >
+            <option value="">Select Country</option>
+            {Object.keys(countries).map((country) => (
+              <option key={country}>{country}</option>
+            ))}
           </select>
+          {errors.country && <small>{errors.country}</small>}
+        </div>
+
+        <div className="input-group">
+          <label>City</label>
+          <select
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            disabled={!formData.country}
+            className={errors.city ? "error" : ""}
+          >
+            <option value="">Select City</option>
+            {(countries[formData.country] || []).map((city) => (
+              <option key={city}>{city}</option>
+            ))}
+          </select>
+          {errors.city && <small>{errors.city}</small>}
+        </div>
+
+        <div className="input-group">
+          <label>PAN Number</label>
           <input
             type="text"
-            name="phoneNumber"
-            value={form.phoneNumber}
+            name="pan"
+            value={formData.pan}
             onChange={handleChange}
+            className={errors.pan ? "error" : ""}
           />
-          {errors.phone && <p style={{ color: "red" }}>{errors.phone}</p>}
+          {errors.pan && <small>{errors.pan}</small>}
         </div>
 
-        <div>
-          <label>Country:</label>
-          <select name="country" value={form.country} onChange={handleChange}>
-            <option value="">Select Country</option>
-            {Object.keys(countriesData).map((country) => (
-              <option key={country} value={country}>
-                {country}
-              </option>
-            ))}
-          </select>
-          {errors.country && <p style={{ color: "red" }}>{errors.country}</p>}
+        <div className="input-group">
+          <label>Aadhar Number</label>
+          <input
+            type="text"
+            name="aadhar"
+            value={formData.aadhar}
+            onChange={handleChange}
+            className={errors.aadhar ? "error" : ""}
+          />
+          {errors.aadhar && <small>{errors.aadhar}</small>}
         </div>
 
-        <div>
-          <label>City:</label>
-          <select name="city" value={form.city} onChange={handleChange}>
-            <option value="">Select City</option>
-            {cities.map((city) => (
-              <option key={city} value={city}>
-                {city}
-              </option>
-            ))}
-          </select>
-          {errors.city && <p style={{ color: "red" }}>{errors.city}</p>}
-        </div>
-
-        <button type="submit" disabled={Object.keys(errors).length = 0}>
+        <button type="submit" className="submit-btn">
           Submit
         </button>
       </form>
     </div>
   );
-}
+};
 
-export default FormPage;
-
-
+export default FormBox;
